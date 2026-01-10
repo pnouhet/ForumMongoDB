@@ -7,12 +7,7 @@ class PostManager
         $data = [
             "title" => $title,
             "content" => $content,
-            "author" => [
-                "_id" => new MongoDB\BSON\ObjectId($author->getId()),
-                "username" => $author->getFirstName(),
-                "avatar_url" => "image.png"
-            ],
-            "stats" => ["views" => 0, "replies_count" => 0],
+            "username" => $author->getUsername(),
             "created_at" => new MongoDB\BSON\UTCDateTime(),
             "last_reply_at" => new MongoDB\BSON\UTCDateTime()
         ];
