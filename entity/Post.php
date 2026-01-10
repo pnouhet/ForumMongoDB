@@ -7,7 +7,7 @@ class Post
   private string $title;
   private string $content;
   private string $date;
-  private User $user;
+  private string $username;
 
   public function __construct(array $data = null)
   {
@@ -35,9 +35,9 @@ class Post
     return $this->date;
   }
 
-  public function getUser(): User
+  public function getUsername(): string
   {
-    return $this->user;
+    return $this->username;
   }
 
   public function setId(string $id)
@@ -60,9 +60,9 @@ class Post
     $this->date = $date;
   }
 
-  public function setUser(User $user)
+  public function setUser(string $username)
   {
-    $this->user = $user;
+    $this->username = $username;
   }
 
   public function hydrate(array $donnees)
