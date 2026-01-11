@@ -1,0 +1,148 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.error {
+    color: red;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #ffcccc;
+    border-radius: 5px;
+}
+
+.success {
+    color: green;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #ccffcc;
+    border-radius: 5px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-links a:hover {
+    color: green;
+}
+
+.logo {
+    font-size: 1.5rem;
+}
+
+.container {
+    padding: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+main div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+main .login-btn, main .register-btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+main .login-btn:hover, main .register-btn:hover {
+    background-color: green;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: green;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input:hover {
+    border-color: green;
+}
+
+.card {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form {
+    display: grid;
+    gap: 15px;
+}
+
+.form-group {
+    display: grid;
+    gap: 5px;
+}
+
+.login-section, .register-section {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-btn, .register-btn {
+    padding: 10px 20px;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    color: black; 
+}
+
+.login-btn:hover, .register-btn:hover {
+    border-color: green;
+    background-color: transparent;
+    color: green;
+}
+
+footer {
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
