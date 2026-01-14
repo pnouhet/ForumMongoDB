@@ -1,18 +1,20 @@
 <?php
+
 class PostController
 {
     private $db;
-    private $PostManager;
+    private $postManager;
 
     public function __construct(MongoDB\Database $db)
     {
+        
         $this->db = $db;
-        $this->PostManager = new PostManager($this->db->post);
+        $this->postManager = new PostManager($this->db->post);
     }
 
     public function getPosts(): void
     {
-        $posts = $this->PostManager->getAllPosts();
+        $posts = $this->postManager->getAllPosts();
         $page = "posts";
         require "views/posts.php";
     }
@@ -33,7 +35,7 @@ class PostController
             "username" => $_SESSION["username"],
         ];
         $post = new Post($data);
-        $response = $this->PostManager->createPost($post);
+        $response = $this->postManager->createPost($post);
         if (!$response) {
             $error = "Impossible de créer l'article";
             $page = "createPost";

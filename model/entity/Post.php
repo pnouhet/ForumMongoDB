@@ -1,5 +1,4 @@
 <?php
-include "./User.php";
 
 class Post
 {
