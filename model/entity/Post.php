@@ -6,8 +6,9 @@ class Post
   private string $id;
   private string $title;
   private string $content;
-  private string $date;
-  private User $user;
+  private string $created_at;
+  private string $last_reply_at;
+  private string $username;
 
   public function __construct(array $data = null)
   {
@@ -30,14 +31,19 @@ class Post
     return $this->content;
   }
 
-  public function getDate(): string
+  public function getCreatedAt(): string
   {
-    return $this->date;
+    return $this->created_at;
   }
 
-  public function getUser(): User
+  public function getLastReplyAt(): string
   {
-    return $this->user;
+    return $this->last_reply_at;
+  }
+
+  public function getUsername(): string
+  {
+    return $this->username;
   }
 
   public function setId(string $id)
@@ -55,14 +61,19 @@ class Post
     $this->content = $content;
   }
 
-  public function setDate(string $date)
+  public function setCreatedAt(string $created_at)
   {
-    $this->date = $date;
+    $this->created_at = $created_at;
   }
 
-  public function setUser(User $user)
+  public function setLastReplyAt(string $last_reply_at)
   {
-    $this->user = $user;
+    $this->last_reply_at = $last_reply_at;
+  }
+
+  public function setUser(string $username)
+  {
+    $this->username = $username;
   }
 
   public function hydrate(array $donnees)
