@@ -25,7 +25,6 @@ $action = $_GET["action"] ?? "home";
 $ctrlClass = ucfirst(strtolower($ctrlParam)) . "Controller";
 $controllerFile = "./controller/{$ctrlClass}.php";
 
-// Security & existence checks
 if (!file_exists($controllerFile)) {
     die("Controller not found");
 }
