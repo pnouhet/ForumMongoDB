@@ -1,10 +1,12 @@
 <?php
 include "./model/Connection.php";
+
 require "vendor/autoload.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+<<<<<<< HEAD
 $uri = $_ENV["MONGODB_URI"];
 $connection = new Connection($uri);
 $db = $connection->getDB();
