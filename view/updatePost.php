@@ -1,4 +1,4 @@
-<form method="POST" action="index.php?ctrl=post&action=doCreate">
+<form method="POST" action="index.php?ctrl=post&action=doUpdate">
 
     <?php if (!empty($errors)): ?>
         <div class="error">
