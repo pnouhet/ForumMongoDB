@@ -24,8 +24,8 @@ if ($result) {
     echo "Document not found";
 }
 
-$ctrlParam = $_GET["ctrl"] ?? "user";
-$action = $_GET["action"] ?? "home";
+$ctrlParam = $_GET["ctrl"] ?? "post";
+$action = $_GET["action"] ?? "getPosts";
 
 $ctrlClass = ucfirst(strtolower($ctrlParam)) . "Controller";
 $controllerFile = "./controller/{$ctrlClass}.php";
