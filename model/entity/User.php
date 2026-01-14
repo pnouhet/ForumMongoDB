@@ -5,8 +5,9 @@ class User
     private int $id;
     private string $email;
     private string $password;
-    private string $firstName;
-    private string $lastName;
+    private string $username;
+    private string $role;
+    private string $createdAt;
 
     public function __construct(array $data = null)
     {
@@ -14,64 +15,61 @@ class User
             $this->hydrate($data);
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getFirstName()
+    public function getUsername(): string
     {
-        return $this->firstName;
+        return $this->username;
     }
 
-    public function getLastName()
+    public function getRole(): string
     {
-        return $this->lastName;
+        return $this->role;
     }
 
-    // Setters
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
     }
 
     public function setEmail($email)
     {
         $this->email = $email;
-        return $this;
     }
 
     public function setPassword($password)
     {
         $this->password = $password;
-        return $this;
     }
 
-    public function setFirstName($firstName)
+    public function setUsername($username)
     {
-        if (is_string($firstName) && $firstName->length > 0) {
-            $this->firstName = $firstName;
-            return $this;
+        if (is_string($username) && $username->length > 0) {
+            $this->username = $username;
         }
     }
 
-    public function setLastName($lastName)
+    public function setCreatedAt($date)
     {
-        if (is_string($lastName) && $lastName->length > 0) {
-            $this->lastName = $lastName;
-            return $this;
-        }
+            $this->createdAt = $date;
     }
 
     public function hydrate(array $donnees)
