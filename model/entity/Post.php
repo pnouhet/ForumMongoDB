@@ -16,7 +16,7 @@ class Post
         }
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -46,37 +46,37 @@ class Post
         return $this->username;
     }
 
-    public function setId(string $id)
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
 
-    public function setCreatedAt(string $created_at)
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function setLastReplyAt(string $last_reply_at)
+    public function setLastReplyAt(string $last_reply_at): void
     {
         $this->last_reply_at = $last_reply_at;
     }
 
-    public function setUser(string $username)
+    public function setUser(string $username): void
     {
         $this->username = $username;
     }
 
-    public function hydrate(array $donnees)
+    public function hydrate(array $donnees): void
     {
         foreach ($donnees as $key => $value) {
             $method = "set" . ucfirst($key);
