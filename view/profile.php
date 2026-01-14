@@ -15,9 +15,9 @@
     <ul>
         <?php foreach ($posts as $post): ?>
             <li>
-                <?= htmlspecialchars(
-                    $post->getTitle(),
-                ) ?> - <?= htmlspecialchars($post->getDate()) ?>
+                <?= htmlspecialchars($post["title"]) ?> - <?= htmlspecialchars(
+     $post["date"],
+ ) ?>
             </li>
         <?php endforeach; ?>
     </ul>
