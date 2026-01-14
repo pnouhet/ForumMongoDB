@@ -24,18 +24,26 @@ if ($result) {
     echo "Document not found";
 }
 
-if (
-    isset($_GET["ctrl"]) &&
-    !empty($_GET["ctrl"]) &&
-    (isset($_GET["action"]) && !empty($_GET["action"]))
-) {
-    $ctrl = $_GET["ctrl"];
-    $action = $_GET["action"];
-} else {
-    $ctrl = "user";
-    $action = "home";
+$ctrlParam = $_GET["ctrl"] ?? "user";
+$action = $_GET["action"] ?? "home";
+
+$ctrlClass = ucfirst(strtolower($ctrlParam)) . "Controller";
+$controllerFile = "./controller/{$ctrlClass}.php";
+
+if (!file_exists($controllerFile)) {
+    die("Controller not found");
 }
-require_once "./controller/" . $ctrl . "Controller.php";
-$ctrl = $ctrl . "Controller";
-$controller = new $ctrl($db);
+
+require_once $controllerFile;
+
+if (!class_exists($ctrlClass)) {
+    die("Controller class not found");
+}
+
+$controller = new $ctrlClass($db);
+
+if (!method_exists($controller, $action)) {
+    die("Action not found");
+}
+
 $controller->$action();
