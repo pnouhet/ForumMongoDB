@@ -1,6 +1,9 @@
 <?php
-include("./User.php");
-include("./Post.php");
+
+use MongoDB\BSON\ObjectId;
+
+include "./User.php";
+include "./Post.php";
 
 class Comment
 {
@@ -44,9 +47,9 @@ class Comment
         return $this->post;
     }
 
-    public function setId(string $id): void
+    public function setId(ObjectId $id): void
     {
-        $this->id = $id;
+        $this->id = (string) $id;
     }
 
     public function setContent(string $content): void
@@ -72,9 +75,21 @@ class Comment
     public function hydrate(array $donnees)
     {
         foreach ($donnees as $key => $value) {
-        $method = 'set' . ucfirst($key);
-        if (method_exists($this, $method)) {
-            $this->$method(trim($value));
-        }
+            $method = "set" . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method(trim($value));
+            }
         }
     }
+
+    public function toArray(): array
+    {
+        return [
+            "content" => $this->content,
+            "user" => $this->user,
+            "createdAt" => $this->createdAt,
+            "post" => $this->post,
+        ];
+    }
+}
+?>
