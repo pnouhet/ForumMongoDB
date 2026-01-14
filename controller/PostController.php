@@ -7,16 +7,16 @@ class PostController
 
     public function __construct(MongoDB\Database $db)
     {
-        
         $this->db = $db;
         $this->postManager = new PostManager($this->db->post);
+        session_start();
     }
 
     public function getPosts(): void
     {
-        $posts = $this->postManager->getAllPosts();
+        $posts = $this->postManager->findAll();
         $page = "posts";
-        require "views/posts.php";
+        require "view/posts.php";
     }
 
     public function create(): void

@@ -6,15 +6,15 @@
     <?php else: ?>
         <?php foreach ($posts as $post): ?>
             <article>
-                <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                <h2><?= htmlspecialchars($post["title"]) ?></h2>
 
                 <p>
-                    <?= nl2br(htmlspecialchars($post->getContent())) ?>
+                    <?= nl2br(htmlspecialchars($post["content"])) ?>
                 </p>
 
                 <small>
-                    Posted on <?= htmlspecialchars($post->getDate()) ?>
-                    by <?= htmlspecialchars($post->getUser()["username"]) ?>
+                    Posted on <?= htmlspecialchars($post["date"]) ?>
+                    by <?= htmlspecialchars($post["user"]["username"]) ?>
                 </small>
             </article>
         <?php endforeach; ?>

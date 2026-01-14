@@ -1,4 +1,10 @@
-<form method="POST" action="index.php?ctrl=post&action=create">
+<form method="POST" action="index.php?ctrl=post&action=doCreate">
+
+    <?php if (!empty($errors)): ?>
+        <div class="error">
+            <?= htmlspecialchars($errors) ?>
+        </div>
+    <?php endif; ?>
 
     <div>
         <label for="title">Title</label><br>

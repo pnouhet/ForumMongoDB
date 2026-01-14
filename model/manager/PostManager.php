@@ -9,7 +9,7 @@ class PostManager
         $this->collection = $db;
     }
 
-    public function create(Post $post)
+    public function create(Post $post): string
     {
         $result = $this->collection->insertOne($post->toArray());
         return $result->getInsertedId();
