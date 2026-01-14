@@ -66,8 +66,13 @@ class PostController
 
     public function update(): void
     {
-        $page = "updatePost";
-        require "view/updatePost.php";
+        if (isset($_GET["id"])) {
+            $page = "updatePost";
+            require "view/updatePost.php";
+        } else {
+            $error = "Id manquant.";
+            $page = "profile";
+        }
     }
 
     public function doUpdate(): void
@@ -77,15 +82,20 @@ class PostController
             $page = "profile";
         } else {
             $post = $this->postManager->findById($_GET["id"]);
-            $post->setTitle($_POST["title"]);
-            $post->setContent($_POST["content"]);
-            $response = $this->postManager->update($post);
-            if (!$response) {
-                $error = "Impossible de créer l'article";
-                $page = "createPost";
-            } else {
-                $info = "Article crée!";
-                $page = "posts";
+            if (
+                isset($_SESSION["username"]) &&
+                $_SESSION["username"] === $post->getUsername()
+            ) {
+                $post->setTitle($_POST["title"]);
+                $post->setContent($_POST["content"]);
+                $response = $this->postManager->update($post);
+                if (!$response) {
+                    $error = "Impossible de créer l'article";
+                    $page = "createPost";
+                } else {
+                    $info = "Article crée!";
+                    $page = "posts";
+                }
             }
         }
         require "views/default.php";
