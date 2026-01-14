@@ -81,5 +81,18 @@ class User
             }
         }
     }
+
+    public function toArray()
+    {
+        return [
+            "username" => $this->username,
+            "email" => $this->email,
+            "password" => $this->password,
+            "role" => $this->role,
+            "createdAt" => $this->createdAt,
+        ];
+    }
+
+    
 }
 

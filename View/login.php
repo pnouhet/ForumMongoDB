@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum - Connexion</title>
-    <link rel="stylesheet" href="View/style.css">
-</head>
-<body>
     <div class="container">
         <div class="card">
             <h1>Se Connecter</h1>
@@ -57,5 +48,3 @@
             </div>
         </div>
     </div>
-</body>
-</html>
