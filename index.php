@@ -47,3 +47,4 @@ if (!method_exists($controller, $action)) {
 }
 
 $controller->$action();
+?>
