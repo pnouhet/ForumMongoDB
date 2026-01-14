@@ -4,9 +4,9 @@ class PostManager
 {
     private $collection;
 
-    public function __construct(MongoDB\Database $db)
+    public function __construct(MongoDB\Collection $db)
     {
-        $this->collection = $db->posts;
+        $this->collection = $db;
     }
 
     public function create(Post $post)
