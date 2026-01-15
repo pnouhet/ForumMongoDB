@@ -1,4 +1,3 @@
-    <div class="container">
         <div class="card">
             <h1>Créer un Compte</h1>
 
@@ -89,4 +88,3 @@
                 </a>
             </div>
         </div>
-    </div>

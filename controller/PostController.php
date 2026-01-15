@@ -91,10 +91,10 @@ class PostController
                 $post->setContent($_POST["content"]);
                 $response = $this->postManager->update($post);
                 if (!$response) {
-                    $error = "Impossible de créer l'article";
+                    $error = "Impossible de modifier l'article";
                     $page = "createPost";
                 } else {
-                    $info = "Article crée!";
+                    $info = "Article modifié !";
                     $page = "posts";
                 }
             }

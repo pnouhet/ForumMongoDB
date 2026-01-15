@@ -10,7 +10,7 @@
 </head>
 <body>
     <?php include_once "header.php"; ?>
-    <section id="main-section">
+    <section class="container">
             <?php if (isset($page)) {
                 if ($page == "posts") {
                     require "./view/posts.php";
