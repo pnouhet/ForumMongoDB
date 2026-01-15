@@ -1,4 +1,3 @@
-    <div class="container">
         <div class="card">
             <h1>Se Connecter</h1>
 
@@ -57,4 +56,3 @@
                 </a>
             </div>
         </div>
-    </div>

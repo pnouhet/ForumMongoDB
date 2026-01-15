@@ -41,6 +41,7 @@ class PostController
         } else {
             $info = "Article crée!";
             $page = "posts";
+            $posts = $this->postManager->findAll();
         }
         require "view/default.php";
     }
@@ -61,6 +62,7 @@ class PostController
             }
         }
         $page = "posts";
+        $posts = $this->postManager->findAll();
         require "view/default.php";
     }
 
@@ -91,11 +93,12 @@ class PostController
                 $post->setContent($_POST["content"]);
                 $response = $this->postManager->update($post);
                 if (!$response) {
-                    $error = "Impossible de créer l'article";
-                    $page = "createPost";
+                    $error = "Impossible de modifier l'article";
+                    $page = "updatePost";
                 } else {
-                    $info = "Article crée!";
+                    $info = "Article modifié !";
                     $page = "posts";
+                    $posts = $this->postManager->findAll();
                 }
             }
         }

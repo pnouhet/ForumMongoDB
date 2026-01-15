@@ -3,13 +3,14 @@
 class UserController
 {
     private $db;
-
     private $userManager;
+    private $postManager;
 
     public function __construct(MongoDB\Database $db)
     {
         $this->db = $db;
         $this->userManager = new UserManager($this->db->user);
+        $this->postManager = new PostManager($this->db->post);
     }
 
     public function doLogin(): void
@@ -23,11 +24,14 @@ class UserController
         if ($result && $passwdCorrect):
             $info = "Connexion reussie";
             $_SESSION["user"] = $result;
+            $user = $result;
             $page = "profile";
         else:
             $info = "Identifiants incorrects.";
             $page = "login";
         endif;
+        $posts = $this->postManager->findByUsername($user->getUsername());
+        $page = "profile";
         require "./view/default.php";
     }
 
@@ -105,6 +109,7 @@ class UserController
             $this->doDisconnect();
         } else {
             $page = "profile";
+            $posts = $this->postManager->findByUsername($user->getUsername());
             require "view/default.php";
         }
     }
