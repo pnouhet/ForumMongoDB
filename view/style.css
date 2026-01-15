@@ -201,3 +201,17 @@ textarea {
     padding: 10px;
     border-radius: 5px;
 }
+
+.user-posts {
+    display: grid;
+    gap: 10px;
+}
+
+.user-posts ul {
+    display: grid;
+    gap: 10px;
+}
+
+ul li {
+    list-style-type: none;
+}
