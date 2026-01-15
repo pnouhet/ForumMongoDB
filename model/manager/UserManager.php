@@ -52,6 +52,7 @@ class UserManager
             return null;
         }
 
+        $data = $data->getArrayCopy();
         $data["id"] = (string) $data["_id"];
         return new User($data);
     }

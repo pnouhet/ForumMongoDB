@@ -55,7 +55,7 @@ class UserController
                     "ERREUR : Cet email (" .
                     $_POST["email"] .
                     ") est déjà utilisé";
-                $page = "createUser";
+                $page = "register";
             }
         }
         require "./view/default.php";

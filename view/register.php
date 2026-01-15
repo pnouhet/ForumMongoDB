@@ -2,9 +2,9 @@
         <div class="card">
             <h1>Créer un Compte</h1>
 
-            <?php if (isset($message)): ?>
+            <?php if (isset($info)): ?>
                 <div class="success"><?php echo htmlspecialchars(
-                    $message,
+                    $info,
                 ); ?></div>
             <?php endif; ?>
 
