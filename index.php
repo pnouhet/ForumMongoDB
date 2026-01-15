@@ -15,6 +15,8 @@ $uri = $_ENV["MONGODB_URI"];
 $connection = new Connection($uri);
 $db = $connection->getDB();
 
+session_start();
+
 $ctrlParam = $_GET["ctrl"] ?? "post";
 $action = $_GET["action"] ?? "getPosts";
 

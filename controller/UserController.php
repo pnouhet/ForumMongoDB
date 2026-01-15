@@ -23,9 +23,10 @@ class UserController
         if ($result && $passwdCorrect):
             $info = "Connexion reussie";
             $_SESSION["user"] = $result;
-            $page = "posts";
+            $page = "profile";
         else:
             $info = "Identifiants incorrects.";
+            $page = "login";
         endif;
         require "./view/default.php";
     }
@@ -87,7 +88,7 @@ class UserController
     public function isAdmin(): bool
     {
         return isset($_SESSION["user"]) &&
-            $_SESSION["user"]["role"] === "admin";
+            $_SESSION["user"]->getRole() === "admin";
     }
 
     public function doDisconnect(): void
@@ -99,7 +100,7 @@ class UserController
 
     public function profile(): void
     {
-        $user = $this->userManager->findOne($_SESSION["user"]["id"]);
+        $user = $this->userManager->findOne($_SESSION["user"]->getId());
         if (!$user) {
             $this->doDisconnect();
         } else {
@@ -110,7 +111,7 @@ class UserController
 
     public function doDeleteProfile(): void
     {
-        $this->userManager->delete($_SESSION["user"]["id"]);
+        $this->userManager->delete($_SESSION["user"]->getId());
         $this->doDisconnect();
     }
 
@@ -122,7 +123,7 @@ class UserController
 
     public function doUpdateProfile(): void
     {
-        $user = $this->userManager->findOne($_SESSION["user"]["id"]);
+        $user = $this->userManager->findOne($_SESSION["user"]->getId());
         if (!$user) {
             $this->doDisconnect();
         } else {
