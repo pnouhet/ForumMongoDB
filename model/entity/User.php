@@ -2,7 +2,7 @@
 
 class User
 {
-    private int $id;
+    private string $id;
     private string $email;
     private string $password;
     private string $username;
@@ -46,31 +46,36 @@ class User
         return $this->createdAt;
     }
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function setUsername($username)
+    public function setUsername(string $username): void
     {
         if (is_string($username) && strlen($username) > 0) {
             $this->username = $username;
         }
     }
 
-    public function setCreatedAt($date)
+    public function setCreatedAt(string $date): void
     {
         $this->createdAt = $date;
+    }
+
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 
     public function hydrate(array $donnees)

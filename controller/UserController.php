@@ -44,7 +44,7 @@ class UserController
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
                     "password" => sha1($_POST["password"]),
-                    "createdAt" => new DateTime(),
+                    "createdAt" => date("d/m/Y H:i:s"),
                     "role" => "user",
                 ]);
                 $this->userManager->create($newUser);
