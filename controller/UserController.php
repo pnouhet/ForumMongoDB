@@ -100,7 +100,7 @@ class UserController
 
     public function profile(): void
     {
-        $user = $this->userManager->findOne($_SESSION["user"]->getId());
+        $user = $_SESSION["user"];
         if (!$user) {
             $this->doDisconnect();
         } else {

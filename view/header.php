@@ -1,7 +1,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="index.php">Accueil</a>
+                <a href="index.php?ctrl=post&action=posts">Accueil</a>
             </div>
             <nav class="nav-links">
                 <?php if (isset($_SESSION["user"])): ?>
