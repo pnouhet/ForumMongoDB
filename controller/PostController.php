@@ -47,11 +47,11 @@ class PostController
 
     public function doDelete(): void
     {
-        $id = $_POST["id"];
+        $id = $_GET["id"];
         $post = $this->postManager->findById($id);
         if (
-            isset($_SESSION["username"]) &&
-            $_SESSION["username"] === $post->getUsername()
+            isset($_SESSION["user"]) &&
+            $_SESSION["user"]->getUsername() === $post->getUsername()
         ) {
             $response = $this->postManager->delete($id);
             if (!$response) {
@@ -60,7 +60,7 @@ class PostController
                 $info = "Article supprimé!";
             }
         }
-        $page = "profile";
+        $page = "posts";
         require "view/default.php";
     }
 
