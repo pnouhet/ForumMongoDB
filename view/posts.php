@@ -20,6 +20,11 @@
                         <p>
                             <?= nl2br(htmlspecialchars($post["content"])) ?>
                         </p>
+                        <?php if (
+                            isset($_SESSION["user"]) &&
+                            $_SESSION["user"]->getUsername() ===
+                                $post["username"]
+                        ): ?>
                         <div class="article-buttons">
                             <a href="index.php?ctrl=post&action=update&id=<?= htmlspecialchars(
                                 $post["_id"],
@@ -32,6 +37,7 @@
                                 <button type="button" class="outline-btn delete">Supprimer</button>
                             </a>
                         </div>
+                        <?php endif; ?>
                     </article>
                     <a href="index.php?ctrl=post&action=doReply&id=<?= htmlspecialchars($post["_id"],) ?>">
                         <button type="button" class="button">Répondre</button>

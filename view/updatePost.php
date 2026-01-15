@@ -17,6 +17,7 @@
                     name="title"
                     required
                     minlength="3"
+                    value="<?= htmlspecialchars($post->getTitle()) ?>"
                 >
             </div>
     
@@ -27,10 +28,10 @@
                     name="content"
                     rows="6"
                     required
-                ></textarea>
+                ><?= htmlspecialchars($post->getContent()) ?></textarea>
             </div>
     
-            <button type="submit">Publier</button>
+            <button type="submit">Modifier</button>
     
     </form>
 </div>
