@@ -104,5 +104,18 @@ class PostController
         }
         require "view/default.php";
     }
+
+    public function findOne(): void
+    {
+        if (isset($_GET["id"])) {
+            $post = $this->postManager->findById($_GET["id"]);
+            $page = "singlePost";
+        } else {
+            $error = "Id manquant.";
+            $page = "posts";
+            $posts = $this->postManager->findAll();
+        }
+        require "view/default.php";
+    }
 }
 ?>
