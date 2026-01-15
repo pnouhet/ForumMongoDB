@@ -6,128 +6,132 @@ class UserController
 
     private $userManager;
 
-    public function __construct($db)
+    public function __construct(MongoDB\Database $db)
     {
-        require_once "./model/entity/User.php";
-        require_once "../model/manager/UserManager.php";
         $this->db = $db;
         $this->userManager = new UserManager($this->db->user);
     }
 
-    public function doLogin()
+    public function doLogin(): void
     {
-        $email = $_POST['email'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $email = $_POST["email"] ?? null;
+        $password = $_POST["password"] ?? null;
 
-        $result = $this->userManager->findOne($email);
+        $result = $this->userManager->findByEmail($email);
         $passwdCorrect = sha1($password) == $result->getPassword();
 
         if ($result && $passwdCorrect):
             $info = "Connexion reussie";
-            $_SESSION['user'] = $result;
-            $page = 'home';
+            $_SESSION["user"] = $result;
+            $page = "profile";
         else:
             $info = "Identifiants incorrects.";
+            $page = "login";
         endif;
-        require('./View/default.php');
+        require "./view/default.php";
     }
 
-    public function doCreate(
-    ) {
+    public function doCreate(): void
+    {
         if (
-            isset($_POST['email']) &&
-            isset($_POST['username']) &&
-            isset($_POST['password']) &&
-            isset($_POST['password_confirm'])
+            isset($_POST["email"]) &&
+            isset($_POST["username"]) &&
+            isset($_POST["password"]) &&
+            isset($_POST["password_confirm"])
         ) {
-            $alreadyExist = $this->userManager->findByEmail($_POST['email']);
+            $alreadyExist = $this->userManager->findByEmail($_POST["email"]);
             if (!$alreadyExist) {
                 $newUser = new User([
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
-                    "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
-                    "createdAt" => new DateTime(),
+                    "password" => sha1($_POST["password"]),
+                    "createdAt" => date("d/m/Y H:i:s"),
+                    "role" => "user",
                 ]);
                 $this->userManager->create($newUser);
                 $info = "Utilisateur enregistré";
-                $page = 'login';
+                $page = "login";
             } else {
-                $info = "ERREUR : Cet email (" . $_POST['email'] . ") est déjà utilisé";
-                $page = 'createForm';
+                $info =
+                    "ERREUR : Cet email (" .
+                    $_POST["email"] .
+                    ") est déjà utilisé";
+                $page = "register";
             }
         }
-        require('./View/default.php');
+        require "./view/default.php";
     }
 
-    public function create()
+    public function create(): void
     {
-        $page = 'createForm';
-        require('./View/default.php');
+        $page = "register";
+        require "./view/default.php";
     }
 
-    public function home()
+    public function login(): void
     {
-        $page = 'home';
-        require('View/default.php');
+        $page = "login";
+        require "./view/default.php";
     }
 
-    public function isConnected()
+    public function home(): void
     {
-        return isset($_SESSION['user']);
-    }
-    
-    public function isAdmin()
-    {
-        return (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin');
+        $page = "posts";
+        require "view/default.php";
     }
 
-    public function doDisconnect()
+    public function isConnected(): bool
     {
-        unset($_SESSION['user']);
-        $page = 'home';
-        require('View/default.php');
+        return isset($_SESSION["user"]);
     }
 
-    public function profile()
+    public function isAdmin(): bool
     {
-        $user = $this->userManager->findOne($_SESSION['user']['id']);
+        return isset($_SESSION["user"]) &&
+            $_SESSION["user"]->getRole() === "admin";
+    }
+
+    public function doDisconnect(): void
+    {
+        unset($_SESSION["user"]);
+        $page = "posts";
+        require "view/default.php";
+    }
+
+    public function profile(): void
+    {
+        $user = $_SESSION["user"];
         if (!$user) {
             $this->doDisconnect();
-            $page = 'home';
-            require('View/default.php');
         } else {
-            $page = 'profile';
-            require('View/default.php');
+            $page = "profile";
+            require "view/default.php";
         }
     }
 
-    public function doDeleteProfile()
+    public function doDeleteProfile(): void
     {
-        $this->userManager->delete($_SESSION['user']['id']);
+        $this->userManager->delete($_SESSION["user"]->getId());
         $this->doDisconnect();
-        $page = 'home';
-        require('View/default.php');
     }
 
-    public function updateProfile()
+    public function updateProfile(): void
     {
-        $page = 'updateProfile';
-        require('View/default.php');
+        $page = "updateProfile";
+        require "view/default.php";
     }
 
-    public function doUpdateProfile()
+    public function doUpdateProfile(): void
     {
-        $user = $this->userManager->findOne($_SESSION['user']['id']);
+        $user = $this->userManager->findOne($_SESSION["user"]->getId());
         if (!$user) {
             $this->doDisconnect();
-            $page = 'home';
-            require('View/default.php');
         } else {
-            $user->setUsername($_POST['username']);
-            $user->setPassword($_POST['password']);
+            $user->setUsername($_POST["username"]);
+            $user->setPassword(sha1($_POST["password"]));
             $this->userManager->update($user);
-            $page = 'profile';
-            require('View/default.php');
+            $page = "profile";
+            require "view/default.php";
         }
     }
 }

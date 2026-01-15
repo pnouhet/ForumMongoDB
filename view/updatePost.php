@@ -1,4 +1,6 @@
-<form method="POST" action="index.php?ctrl=post&action=doUpdate">
+<form method="POST" action="index.php?ctrl=post&action=doUpdate&id=<?= htmlspecialchars(
+    $post->getId(),
+) ?>"">
 
     <?php if (!empty($errors)): ?>
         <div class="error">
@@ -14,6 +16,7 @@
             name="title"
             required
             minlength="3"
+            value="<?= htmlspecialchars($post->getTitle()) ?>"
         >
     </div>
 
@@ -26,7 +29,7 @@
             name="content"
             rows="6"
             required
-        ></textarea>
+        ><?= htmlspecialchars($post->getContent()) ?></textarea>
     </div>
 
     <br>

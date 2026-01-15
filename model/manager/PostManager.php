@@ -32,15 +32,18 @@ class PostManager
         return $result->getModifiedCount() > 0;
     }
 
-    public function findOne(string $id): ?Post
+    public function findById(string $id): ?Post
     {
-        $post = $this->collection->findOne([
+        $data = $this->collection->findOne([
             "_id" => new MongoDB\BSON\ObjectId($id),
         ]);
-        if (!$post) {
+        if (!$data) {
             return null;
         }
-        return $post;
+        $data = $data->getArrayCopy();
+        $data["id"] = (string) $data["_id"];
+        unset($data["_id"]);
+        return new Post($data);
     }
 
     public function findAll(): array

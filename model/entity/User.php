@@ -2,7 +2,7 @@
 
 class User
 {
-    private int $id;
+    private string $id;
     private string $email;
     private string $password;
     private string $username;
@@ -11,8 +11,9 @@ class User
 
     public function __construct(array $data = null)
     {
-        if ($data)
+        if ($data) {
             $this->hydrate($data);
+        }
     }
 
     public function getId(): string
@@ -45,37 +46,42 @@ class User
         return $this->createdAt;
     }
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function setUsername($username)
+    public function setUsername(string $username): void
     {
-        if (is_string($username) && $username->length > 0) {
+        if (is_string($username) && strlen($username) > 0) {
             $this->username = $username;
         }
     }
 
-    public function setCreatedAt($date)
+    public function setCreatedAt(string $date): void
     {
-            $this->createdAt = $date;
+        $this->createdAt = $date;
+    }
+
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 
     public function hydrate(array $donnees)
     {
         foreach ($donnees as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $method = "set" . ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method(trim($value));
             }
@@ -92,7 +98,4 @@ class User
             "createdAt" => $this->createdAt,
         ];
     }
-
-    
 }
-

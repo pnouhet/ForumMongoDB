@@ -1,8 +1,13 @@
 <section>
-    <h1>All posts</h1>
+    <h1>Les articles</h1>
+
+
+        <a href="index.php?ctrl=post&action=create">
+            <button type="button" class="register-btn">Créer un article</button>
+        </a>
 
     <?php if (empty($posts)): ?>
-        <p>No posts yet.</p>
+        <p>Pas encore d'articles.</p>
     <?php else: ?>
         <?php foreach ($posts as $post): ?>
             <article>
@@ -13,9 +18,21 @@
                 </p>
 
                 <small>
-                    Posted on <?= htmlspecialchars($post["date"]) ?>
-                    by <?= htmlspecialchars($post["user"]["username"]) ?>
+                    Posté à <?= htmlspecialchars($post["createdAt"]) ?>
+                    par <?= htmlspecialchars($post["username"]) ?>
                 </small>
+
+                <a href="index.php?ctrl=post&action=update&id=<?= htmlspecialchars(
+                    $post["_id"],
+                ) ?>">
+                    <button type="button" class="register-btn">Modifier</button>
+                </a>
+
+                <a href="index.php?ctrl=post&action=doDelete&id=<?= htmlspecialchars(
+                    $post["_id"],
+                ) ?>">
+                    <button type="button" class="register-btn">Supprimer</button>
+                </a>
             </article>
         <?php endforeach; ?>
     <?php endif; ?>
