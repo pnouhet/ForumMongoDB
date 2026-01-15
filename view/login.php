@@ -2,7 +2,13 @@
         <div class="card">
             <h1>Se Connecter</h1>
 
-            <form method="POST" action="">
+            <?php if (isset($info)): ?>
+                            <div class="success"><?php echo htmlspecialchars(
+                                $info,
+                            ); ?></div>
+                        <?php endif; ?>
+
+            <form method="POST" action="index.php?ctrl=user&action=doLogin">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input

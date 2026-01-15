@@ -11,11 +11,11 @@ class PostController
         $this->postManager = new PostManager($this->db->post);
     }
 
-    public function getPosts(): void
+    public function posts(): void
     {
         $posts = $this->postManager->findAll();
         $page = "posts";
-        require "view/posts.php";
+        require "view/default.php";
     }
 
     public function create(): void

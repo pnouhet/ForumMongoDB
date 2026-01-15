@@ -13,7 +13,7 @@
     <section id="main-section">
             <?php if (isset($page)) {
                 if ($page == "posts") {
-                    require "./view/home.php";
+                    require "./view/posts.php";
                 } else {
                     require "./view/" . $page . ".php";
                 }

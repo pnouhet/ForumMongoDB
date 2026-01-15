@@ -6,8 +6,8 @@
             <nav class="nav-links">
                 <?php if (isset($_SESSION["user"])): ?>
                     <span>Bienvenue, <?php echo htmlspecialchars(
-                        $_SESSION["user"]["username"] ?? "User",
-                    ); ?></span>
+                        $_SESSION["user"]->getUsername(),
+                    ) ?? "User"; ?></span>
                     <a href="index.php?ctrl=post&action=posts">Accueil</a>
                     <a href="index.php?ctrl=user&action=profile">Profil</a>
                     <a href="index.php?ctrl=user&action=doDisconnect" class="logout-btn">Déconnexion</a>

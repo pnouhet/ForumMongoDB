@@ -17,7 +17,7 @@ class UserController
         $email = $_POST["email"] ?? null;
         $password = $_POST["password"] ?? null;
 
-        $result = $this->userManager->findOne($email);
+        $result = $this->userManager->findByEmail($email);
         $passwdCorrect = sha1($password) == $result->getPassword();
 
         if ($result && $passwdCorrect):
