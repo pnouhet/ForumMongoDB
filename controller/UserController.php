@@ -6,128 +6,125 @@ class UserController
 
     private $userManager;
 
-    public function __construct($db)
+    public function __construct(MongoDB\Database $db)
     {
-        require_once "./model/entity/User.php";
-        require_once "../model/manager/UserManager.php";
         $this->db = $db;
         $this->userManager = new UserManager($this->db->user);
     }
 
-    public function doLogin()
+    public function doLogin(): void
     {
-        $email = $_POST['email'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $email = $_POST["email"] ?? null;
+        $password = $_POST["password"] ?? null;
 
         $result = $this->userManager->findOne($email);
         $passwdCorrect = sha1($password) == $result->getPassword();
 
         if ($result && $passwdCorrect):
             $info = "Connexion reussie";
-            $_SESSION['user'] = $result;
-            $page = 'home';
+            $_SESSION["user"] = $result;
+            $page = "posts";
         else:
             $info = "Identifiants incorrects.";
         endif;
-        require('./View/default.php');
+        require "./view/default.php";
     }
 
-    public function doCreate(
-    ) {
+    public function doCreate(): void
+    {
         if (
-            isset($_POST['email']) &&
-            isset($_POST['username']) &&
-            isset($_POST['password']) &&
-            isset($_POST['password_confirm'])
+            isset($_POST["email"]) &&
+            isset($_POST["username"]) &&
+            isset($_POST["password"]) &&
+            isset($_POST["password_confirm"])
         ) {
-            $alreadyExist = $this->userManager->findByEmail($_POST['email']);
+            $alreadyExist = $this->userManager->findByEmail($_POST["email"]);
             if (!$alreadyExist) {
                 $newUser = new User([
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
-                    "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
+                    "password" => sha1($_POST["password"]),
                     "createdAt" => new DateTime(),
+                    "role" => "user",
                 ]);
                 $this->userManager->create($newUser);
                 $info = "Utilisateur enregistré";
-                $page = 'login';
+                $page = "login";
             } else {
-                $info = "ERREUR : Cet email (" . $_POST['email'] . ") est déjà utilisé";
-                $page = 'createForm';
+                $info =
+                    "ERREUR : Cet email (" .
+                    $_POST["email"] .
+                    ") est déjà utilisé";
+                $page = "createUser";
             }
         }
-        require('./View/default.php');
+        require "./view/default.php";
     }
 
-    public function create()
+    public function create(): void
     {
-        $page = 'createForm';
-        require('./View/default.php');
+        $page = "createUser";
+        require "./view/default.php";
     }
 
-    public function home()
+    public function home(): void
     {
-        $page = 'home';
-        require('View/default.php');
+        $page = "posts";
+        require "view/default.php";
     }
 
-    public function isConnected()
+    public function isConnected(): bool
     {
-        return isset($_SESSION['user']);
-    }
-    
-    public function isAdmin()
-    {
-        return (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin');
+        return isset($_SESSION["user"]);
     }
 
-    public function doDisconnect()
+    public function isAdmin(): bool
     {
-        unset($_SESSION['user']);
-        $page = 'home';
-        require('View/default.php');
+        return isset($_SESSION["user"]) &&
+            $_SESSION["user"]["role"] === "admin";
     }
 
-    public function profile()
+    public function doDisconnect(): void
     {
-        $user = $this->userManager->findOne($_SESSION['user']['id']);
+        unset($_SESSION["user"]);
+        $page = "posts";
+        require "view/default.php";
+    }
+
+    public function profile(): void
+    {
+        $user = $this->userManager->findOne($_SESSION["user"]["id"]);
         if (!$user) {
             $this->doDisconnect();
-            $page = 'home';
-            require('View/default.php');
         } else {
-            $page = 'profile';
-            require('View/default.php');
+            $page = "profile";
+            require "view/default.php";
         }
     }
 
-    public function doDeleteProfile()
+    public function doDeleteProfile(): void
     {
-        $this->userManager->delete($_SESSION['user']['id']);
+        $this->userManager->delete($_SESSION["user"]["id"]);
         $this->doDisconnect();
-        $page = 'home';
-        require('View/default.php');
     }
 
-    public function updateProfile()
+    public function updateProfile(): void
     {
-        $page = 'updateProfile';
-        require('View/default.php');
+        $page = "updateProfile";
+        require "view/default.php";
     }
 
-    public function doUpdateProfile()
+    public function doUpdateProfile(): void
     {
-        $user = $this->userManager->findOne($_SESSION['user']['id']);
+        $user = $this->userManager->findOne($_SESSION["user"]["id"]);
         if (!$user) {
             $this->doDisconnect();
-            $page = 'home';
-            require('View/default.php');
         } else {
-            $user->setUsername($_POST['username']);
-            $user->setPassword($_POST['password']);
+            $user->setUsername($_POST["username"]);
+            $user->setPassword(sha1($_POST["password"]));
             $this->userManager->update($user);
-            $page = 'profile';
-            require('View/default.php');
+            $page = "profile";
+            require "view/default.php";
         }
     }
 }
