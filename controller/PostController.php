@@ -20,8 +20,8 @@ class PostController
 
     public function create(): void
     {
-        $page = "create";
-        require "view/createPost.php";
+        $page = "createPost";
+        require "view/default.php";
     }
 
     public function doCreate(): void
@@ -29,12 +29,12 @@ class PostController
         $data = [
             "title" => $_POST["title"],
             "content" => $_POST["content"],
-            "created_at" => new MongoDB\BSON\UTCDateTime(),
-            "last_reply_at" => new MongoDB\BSON\UTCDateTime(),
-            "username" => $_SESSION["username"],
+            "createdAt" => date("d/m/Y H:i:s"),
+            "lastReplyAt" => date("d/m/Y H:i:s"),
+            "username" => $_SESSION["user"]->getUsername(),
         ];
         $post = new Post($data);
-        $response = $this->postManager->createPost($post);
+        $response = $this->postManager->create($post);
         if (!$response) {
             $error = "Impossible de créer l'article";
             $page = "createPost";
@@ -42,7 +42,7 @@ class PostController
             $info = "Article crée!";
             $page = "posts";
         }
-        require "views/default.php";
+        require "view/default.php";
     }
 
     public function doDelete(): void
@@ -61,7 +61,7 @@ class PostController
             }
         }
         $page = "profile";
-        require "views/default.php";
+        require "view/default.php";
     }
 
     public function update(): void
@@ -98,7 +98,7 @@ class PostController
                 }
             }
         }
-        require "views/default.php";
+        require "view/default.php";
     }
 }
 ?>

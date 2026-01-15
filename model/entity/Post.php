@@ -5,8 +5,8 @@ class Post
     private string $id;
     private string $title;
     private string $content;
-    private string $created_at;
-    private string $last_reply_at;
+    private string $createdAt;
+    private string $lastReplyAt;
     private string $username;
 
     public function __construct(array $data = null)
@@ -33,12 +33,12 @@ class Post
 
     public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     public function getLastReplyAt(): string
     {
-        return $this->last_reply_at;
+        return $this->lastReplyAt;
     }
 
     public function getUsername(): string
@@ -61,17 +61,17 @@ class Post
         $this->content = $content;
     }
 
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
-    public function setLastReplyAt(string $last_reply_at): void
+    public function setLastReplyAt(string $lastReplyAt): void
     {
-        $this->last_reply_at = $last_reply_at;
+        $this->lastReplyAt = $lastReplyAt;
     }
 
-    public function setUser(string $username): void
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
@@ -91,8 +91,9 @@ class Post
         return [
             "title" => $this->title,
             "content" => $this->content,
-            "date" => $this->date,
-            "user" => $this->user,
+            "createdAt" => $this->createdAt,
+            "lastReplyAt" => $this->lastReplyAt,
+            "username" => $this->username,
         ];
     }
 }
