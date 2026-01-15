@@ -67,12 +67,13 @@ class PostController
     public function update(): void
     {
         if (isset($_GET["id"])) {
+            $post = $this->postManager->findById($_GET["id"]);
             $page = "updatePost";
-            require "view/updatePost.php";
         } else {
             $error = "Id manquant.";
             $page = "profile";
         }
+        require "view/default.php";
     }
 
     public function doUpdate(): void
@@ -83,8 +84,8 @@ class PostController
         } else {
             $post = $this->postManager->findById($_GET["id"]);
             if (
-                isset($_SESSION["username"]) &&
-                $_SESSION["username"] === $post->getUsername()
+                isset($_SESSION["user"]) &&
+                $_SESSION["user"]->getUsername() === $post->getUsername()
             ) {
                 $post->setTitle($_POST["title"]);
                 $post->setContent($_POST["content"]);
