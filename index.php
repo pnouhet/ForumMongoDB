@@ -14,15 +14,6 @@ $dotenv->load();
 $uri = $_ENV["MONGODB_URI"];
 $connection = new Connection($uri);
 $db = $connection->getDB();
-$collection = $db->user;
-
-$filter = ["username" => "Remi Abdallah"];
-$result = $collection->findOne($filter);
-if ($result) {
-    echo json_encode($result, JSON_PRETTY_PRINT);
-} else {
-    echo "Document not found";
-}
 
 $ctrlParam = $_GET["ctrl"] ?? "post";
 $action = $_GET["action"] ?? "getPosts";

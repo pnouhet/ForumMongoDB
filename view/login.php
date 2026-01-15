@@ -5,29 +5,33 @@
             <form method="POST" action="">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
                         required
                         placeholder="Entrez votre email"
                     >
                     <?php if (isset($errors["email"])): ?>
-                        <div class="error"><?php echo htmlspecialchars($errors["email"]); ?></div>
+                        <div class="error"><?php echo htmlspecialchars(
+                            $errors["email"],
+                        ); ?></div>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
                         required
                         placeholder="Entrez votre mot de passe"
                     >
                     <?php if (isset($errors["password"])): ?>
-                        <div class="error"><?php echo htmlspecialchars($errors["password"]); ?></div>
+                        <div class="error"><?php echo htmlspecialchars(
+                            $errors["password"],
+                        ); ?></div>
                     <?php endif; ?>
                 </div>
 
@@ -42,7 +46,7 @@
 
             <div class="register-section">
                 <p>Pas encore de compte ?</p>
-                <a href="index.php?action=register">
+                <a href="index.php?ctrl=user&action=create">
                     <button type="button" class="register-btn">Créer un compte</button>
                 </a>
             </div>

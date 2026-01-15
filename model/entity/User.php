@@ -11,8 +11,9 @@ class User
 
     public function __construct(array $data = null)
     {
-        if ($data)
+        if ($data) {
             $this->hydrate($data);
+        }
     }
 
     public function getId(): string
@@ -62,20 +63,20 @@ class User
 
     public function setUsername($username)
     {
-        if (is_string($username) && $username->length > 0) {
+        if (is_string($username) && strlen($username) > 0) {
             $this->username = $username;
         }
     }
 
     public function setCreatedAt($date)
     {
-            $this->createdAt = $date;
+        $this->createdAt = $date;
     }
 
     public function hydrate(array $donnees)
     {
         foreach ($donnees as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $method = "set" . ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method(trim($value));
             }
@@ -92,7 +93,4 @@ class User
             "createdAt" => $this->createdAt,
         ];
     }
-
-    
 }
-

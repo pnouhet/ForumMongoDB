@@ -63,7 +63,13 @@ class UserController
 
     public function create(): void
     {
-        $page = "createUser";
+        $page = "register";
+        require "./view/default.php";
+    }
+
+    public function login(): void
+    {
+        $page = "login";
         require "./view/default.php";
     }
 
