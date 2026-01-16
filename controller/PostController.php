@@ -4,11 +4,13 @@ class PostController
 {
     private $db;
     private $postManager;
+    private $commentManager;
 
     public function __construct(MongoDB\Database $db)
     {
         $this->db = $db;
         $this->postManager = new PostManager($this->db->post);
+        $this->commentManager = new CommentManager($this->db->comment);
     }
 
     public function posts(): void
@@ -109,6 +111,7 @@ class PostController
     {
         if (isset($_GET["id"])) {
             $post = $this->postManager->findById($_GET["id"]);
+            $comments = $this->commentManager->findByPostId($_GET["id"]);
             $page = "singlePost";
         } else {
             $error = "Id manquant.";

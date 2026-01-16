@@ -215,7 +215,13 @@ ul li {
     list-style-type: none;
 }
 
-.profile-card, .user-profile, .user-posts, .user-posts ul {
+.profile-card, .user-profile, .user-posts, .user-posts ul, .comments-container {
     display: grid;
     gap: 20px;
+}
+
+.comment {
+    display: grid;
+    gap: 10px;
+    margin-left: 20px;
 }
