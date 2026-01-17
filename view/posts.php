@@ -9,39 +9,41 @@
             <p>Pas encore d'articles.</p>
         <?php else: ?>
             <?php foreach ($posts as $post): ?>
-                    <article>
-                        <div class="article-head">
-                            <h2><?= htmlspecialchars($post["title"]) ?></h2>
-                            <small>
-                                Posté à <?= htmlspecialchars($post["createdAt"]) ?>
-                                par <?= htmlspecialchars($post["username"]) ?>
-                            </small>
-                        </div>
-                        <p>
-                            <?= nl2br(htmlspecialchars($post["content"])) ?>
-                        </p>
-                        <?php if (
-                            isset($_SESSION["user"]) &&
-                            $_SESSION["user"]->getUsername() ===
-                                $post["username"]
-                        ): ?>
-                        <div class="article-buttons">
-                            <a href="index.php?ctrl=post&action=update&id=<?= htmlspecialchars(
-                                $post["_id"],
-                            ) ?>">
-                                <button type="button" class="outline-btn">Modifier</button>
-                            </a>
-                            <a href="index.php?ctrl=post&action=doDelete&id=<?= htmlspecialchars(
-                                $post["_id"],
-                            ) ?>">
-                                <button type="button" class="outline-btn delete">Supprimer</button>
-                            </a>
-                        </div>
-                        <?php endif; ?>
-                    </article>
-                    <a href="index.php?ctrl=post&action=doReply&id=<?= htmlspecialchars($post["_id"],) ?>">
-                        <button type="button" class="button">Répondre</button>
-                    </a>
+                    <div class="single-article">
+                        <article>
+                            <div class="article-head">
+                                <h2><?= htmlspecialchars($post["title"]) ?></h2>
+                                <small>
+                                    Posté à <?= htmlspecialchars($post["createdAt"]) ?>
+                                    par <?= htmlspecialchars($post["username"]) ?>
+                                </small>
+                            </div>
+                            <p>
+                                <?= nl2br(htmlspecialchars($post["content"])) ?>
+                            </p>
+                            <?php if (
+                                isset($_SESSION["user"]) &&
+                                $_SESSION["user"]->getUsername() ===
+                                    $post["username"]
+                            ): ?>
+                            <div class="article-buttons">
+                                <a href="index.php?ctrl=post&action=update&id=<?= htmlspecialchars(
+                                    $post["_id"],
+                                ) ?>">
+                                    <button type="button" class="outline-btn">Modifier</button>
+                                </a>
+                                <a href="index.php?ctrl=post&action=doDelete&id=<?= htmlspecialchars(
+                                    $post["_id"],
+                                ) ?>">
+                                    <button type="button" class="outline-btn delete">Supprimer</button>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                        </article>
+                        <a href="index.php?ctrl=post&action=findOne&id=<?= htmlspecialchars($post["_id"]) ?>">
+                            <button type="button" class="button">Voir le post</button>
+                        </a>
+                    </div>
                 <?php endforeach; ?>
         <?php endif; ?>
     </div>

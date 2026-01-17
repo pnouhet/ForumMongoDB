@@ -162,13 +162,17 @@ footer {
 
 .article-container {
     display: grid;
-    grid-column: repeat inherit;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    grid-gap: 10px;
+    grid-gap: 40px;
 }
 
-.article-container article {
+.single-article {
+    display: grid;
+    gap: 10px;
+}
+
+article {
     border: 1px solid;
     border-radius: 5px;
     overflow: hidden;
@@ -181,6 +185,11 @@ footer {
 
 article p {
     padding: 20px;
+}
+
+.article-container-buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 .article-buttons {
@@ -202,16 +211,17 @@ textarea {
     border-radius: 5px;
 }
 
-.user-posts {
-    display: grid;
-    gap: 10px;
-}
-
-.user-posts ul {
-    display: grid;
-    gap: 10px;
-}
-
 ul li {
     list-style-type: none;
+}
+
+.profile-card, .user-profile, .user-posts, .user-posts ul, .comments-container {
+    display: grid;
+    gap: 20px;
+}
+
+.comment {
+    display: grid;
+    gap: 10px;
+    margin-left: 20px;
 }

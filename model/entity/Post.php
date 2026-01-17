@@ -18,7 +18,7 @@ class Post
 
     public function getId(): string
     {
-        return $this->id;
+      return $this->id;
     }
 
     public function getTitle(): string

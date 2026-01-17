@@ -7,6 +7,8 @@ require_once "./model/entity/Post.php";
 require_once "./model/manager/PostManager.php";
 require_once "./model/entity/User.php";
 require_once "./model/manager/UserManager.php";
+require_once "./model/entity/Comment.php";
+require_once "./model/manager/CommentManager.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -18,7 +20,7 @@ $db = $connection->getDB();
 session_start();
 
 $ctrlParam = $_GET["ctrl"] ?? "post";
-$action = $_GET["action"] ?? "getPosts";
+$action = $_GET["action"] ?? "posts";
 
 $ctrlClass = ucfirst(strtolower($ctrlParam)) . "Controller";
 $controllerFile = "./controller/{$ctrlClass}.php";

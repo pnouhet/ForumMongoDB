@@ -1,13 +1,15 @@
-<section>
-<h1>Profil: <?= htmlspecialchars($user->getUsername()) ?></h1>
+<section class="profile-card">
+<h1>Profil de <?= htmlspecialchars($user->getUsername()) ?></h1>
 
-<h2>Détails</h2>
-<p>Nom d'utilisateur: <?= htmlspecialchars($user->getUsername()) ?></p>
-<p>Email: <?= htmlspecialchars($user->getEmail()) ?></p>
+<div class="user-profile">
+    <h2>Vos informations</h2>
+    <p>Nom d'utilisateur: <?= htmlspecialchars($user->getUsername()) ?></p>
+    <p>Email: <?= htmlspecialchars($user->getEmail()) ?></p>
+</div>
 
-<div>
-    <a href="index.php?ctrl=user&action=update&id=<?= $user->getId() ?>">Modifier son profil</a>
-    <a href="index.php?ctrl=user&action=delete&id=<?= $user->getId() ?>">Supprimer son profil</a>
+<div class="user-profile-btns">
+    <a class="outline-btn" href="index.php?ctrl=user&action=update&id=<?= $user->getId() ?>">Modifier mes infos</a>
+    <a class="outline-btn delete" href="index.php?ctrl=user&action=delete&id=<?= $user->getId() ?>">Supprimer mon compte</a>
 </div>
 
 <div class="user-posts">
@@ -20,7 +22,7 @@
                     <span>- crée le </span>
                     <?= htmlspecialchars($post["createdAt"]) ?>
                     <span>-</span>
-                    <a href="index.php?ctrl=post&action=update&id=<?= htmlspecialchars($post["_id"]) ?>">
+                    <a href="index.php?ctrl=post&action=findOne&id=<?= htmlspecialchars($post["_id"]) ?>">
                         <button type="button">Voir le post</button>
                     </a>
                 </li>
