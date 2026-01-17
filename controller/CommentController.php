@@ -95,4 +95,35 @@ class CommentController
         }
         require "view/default.php";
     }
+
+    public function doDelete(): void
+    {
+        if (!isset($_GET["id"])) {
+            $error = "Id manquant.";
+            $page = "profile";
+        } else {
+            $comment = $this->commentManager->findById($_GET["id"]);
+            if (
+                isset($_SESSION["user"]) &&
+                $_SESSION["user"]->getUsername() === $comment->getUsername()
+            ) {
+                $response = $this->commentManager->delete($comment->getId());
+                if (!$response) {
+                    $error = "Impossible de supprimer la réponse";
+                    header(
+                        "Location: index.php?ctrl=post&action=findOne&id=" .
+                            $comment->getPostId(),
+                    );
+                } else {
+                    $info = "Réponse supprimée !";
+                    $page = "singlePost";
+                    $post = $this->postManager->findById($comment->getPostId());
+                    $comments = $this->commentManager->findByPostId(
+                        $comment->getPostId(),
+                    );
+                }
+            }
+        }
+        require "view/default.php";
+    }
 }
