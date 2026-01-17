@@ -22,4 +22,35 @@ class CommentManager
         ]);
         return iterator_to_array($comments);
     }
+
+    public function delete(string $id): bool
+    {
+        $result = $this->collection->deleteOne([
+            "_id" => new MongoDB\BSON\ObjectId($id),
+        ]);
+        return $result->getDeletedCount() > 0;
+    }
+
+    public function update(Comment $comment): bool
+    {
+        $result = $this->collection->updateOne(
+            ["_id" => new MongoDB\BSON\ObjectId($comment->getId())],
+            ['$set' => $comment->toArray()],
+        );
+        return $result->getModifiedCount() > 0;
+    }
+
+    public function findById(string $id): ?Comment
+    {
+        $data = $this->collection->findOne([
+            "_id" => new MongoDB\BSON\ObjectId($id),
+        ]);
+        if (!$data) {
+            return null;
+        }
+        $data = $data->getArrayCopy();
+        $data["id"] = (string) $data["_id"];
+        unset($data["_id"]);
+        return new Comment($data);
+    }
 }
