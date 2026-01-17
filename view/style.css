@@ -1,5 +1,5 @@
 * {
-    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -65,7 +65,8 @@ main div {
     gap: 10px;
 }
 
-main .login-btn, main .register-btn {
+main .login-btn,
+main .register-btn {
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
@@ -74,7 +75,8 @@ main .login-btn, main .register-btn {
     cursor: pointer;
 }
 
-main .login-btn:hover, main .register-btn:hover {
+main .login-btn:hover,
+main .register-btn:hover {
     background-color: green;
     color: #fff;
 }
@@ -119,30 +121,36 @@ form {
     gap: 5px;
 }
 
-.login-section, .register-section {
+.login-section,
+.register-section {
     margin-top: 20px;
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.login-btn, .register-btn, .outline-btn {
+.login-btn,
+.register-btn,
+.outline-btn {
     padding: 10px 20px;
     border: 1px solid #333;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
     background-color: transparent;
-    color: black; 
+    color: black;
 }
 
-.login-btn:hover, .register-btn:hover, .outline-btn:hover {
+.login-btn:hover,
+.register-btn:hover,
+.outline-btn:hover {
     border-color: green;
     background-color: transparent;
     color: green;
 }
 
-.delete:hover, .nav-links .logout-btn:hover {
+.delete:hover,
+.nav-links .logout-btn:hover {
     border-color: red;
     background-color: transparent;
     color: red;
@@ -199,7 +207,8 @@ article p {
     padding: 10px;
 }
 
-.post-title, .post-content {
+.post-title,
+.post-content .comment-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -215,7 +224,11 @@ ul li {
     list-style-type: none;
 }
 
-.profile-card, .user-profile, .user-posts, .user-posts ul, .comments-container {
+.profile-card,
+.user-profile,
+.user-posts,
+.user-posts ul,
+.comments-container {
     display: grid;
     gap: 20px;
 }
