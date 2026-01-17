@@ -8,7 +8,7 @@
 </div>
 
 <div class="user-profile-btns">
-    <a class="outline-btn" href="index.php?ctrl=user&action=update&id=<?= $user->getId() ?>">Modifier mes infos</a>
+    <a class="outline-btn" href="index.php?ctrl=user&action=updateProfile&id=<?= $user->getId() ?>">Modifier mes infos</a>
     <a class="outline-btn delete" href="index.php?ctrl=user&action=doDeleteProfile">Supprimer mon compte</a>
 </div>
 

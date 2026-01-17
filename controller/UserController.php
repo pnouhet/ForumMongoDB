@@ -129,7 +129,12 @@ class UserController
 
     public function updateProfile(): void
     {
-        $page = "updateProfile";
+        if (!isset($_GET["id"])) {
+            $page = "profile";
+        } else {
+            $user = $this->userManager->findOne($_GET["id"]);
+            $page = "updateProfile";
+        }
         require "view/default.php";
     }
 
@@ -140,8 +145,11 @@ class UserController
             $this->doDisconnect();
         } else {
             $user->setUsername($_POST["username"]);
-            $user->setPassword(sha1($_POST["password"]));
-            $this->userManager->update($user);
+            $user->setEmail($_POST["email"]);
+            $response = $this->userManager->update($user);
+            if ($response) {
+                $_SESSION["user"] = $user;
+            }
             $page = "profile";
             require "view/default.php";
         }
