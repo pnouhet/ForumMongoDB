@@ -6,7 +6,6 @@ class User
     private string $email;
     private string $password;
     private string $username;
-    private string $role;
     private string $createdAt;
 
     public function __construct(array $data = null)
@@ -34,11 +33,6 @@ class User
     public function getUsername(): string
     {
         return $this->username;
-    }
-
-    public function getRole(): string
-    {
-        return $this->role;
     }
 
     public function getCreatedAt(): string
@@ -71,11 +65,6 @@ class User
     public function setCreatedAt(string $date): void
     {
         $this->createdAt = $date;
-    }
-
-    public function setRole(string $role): void
-    {
-        $this->role = $role;
     }
 
     public function hydrate(array $donnees)

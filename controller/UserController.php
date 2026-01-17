@@ -89,12 +89,6 @@ class UserController
         return isset($_SESSION["user"]);
     }
 
-    public function isAdmin(): bool
-    {
-        return isset($_SESSION["user"]) &&
-            $_SESSION["user"]->getRole() === "admin";
-    }
-
     public function doDisconnect(): void
     {
         unset($_SESSION["user"]);
