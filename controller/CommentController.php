@@ -13,7 +13,6 @@ class CommentController
     {
         if (isset($_GET["id"])) {
             $postId = $_GET["id"];
-            // Add parentId logic
             $parentId = $_GET["parentId"] ?? null;
             $page = "replyPost";
         } else {
@@ -40,10 +39,12 @@ class CommentController
             ];
             $comment = new Comment($data);
             $this->CommentManager->create($comment);
-            
-            // Redirect to the post
-            header("Location: index.php?ctrl=post&action=findOne&id=" . $_POST["postId"]);
-            exit;
+
+            header(
+                "Location: index.php?ctrl=post&action=findOne&id=" .
+                    $_POST["postId"],
+            );
+            exit();
         } else {
             $error = "Impossible de répondre.";
             $page = "posts";
@@ -51,4 +52,3 @@ class CommentController
         }
     }
 }
-
