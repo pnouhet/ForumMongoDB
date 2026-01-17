@@ -99,6 +99,7 @@ class UserController
     {
         unset($_SESSION["user"]);
         $page = "posts";
+        $posts = $this->postManager->findAll();
         require "view/default.php";
     }
 

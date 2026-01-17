@@ -100,8 +100,11 @@ class PostController
                     $page = "updatePost";
                 } else {
                     $info = "Article modifié !";
-                    $page = "posts";
-                    $posts = $this->postManager->findAll();
+                    $page = "singlePost";
+                    $post = $this->postManager->findById($_GET["id"]);
+                    $comments = $this->commentManager->findByPostId(
+                        $_GET["id"],
+                    );
                 }
             }
         }
