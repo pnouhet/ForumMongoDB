@@ -142,7 +142,7 @@ form {
     color: green;
 }
 
-.delete:hover {
+.delete:hover, .nav-links .logout-btn:hover {
     border-color: red;
     background-color: transparent;
     color: red;
