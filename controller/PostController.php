@@ -42,8 +42,9 @@ class PostController
             $page = "createPost";
         } else {
             $info = "Article crée!";
-            $page = "posts";
-            $posts = $this->postManager->findAll();
+            $page = "singlePost";
+            $post = $this->postManager->findById($response);
+            $comments = $this->commentManager->findByPostId($response);
         }
         require "view/default.php";
     }

@@ -116,8 +116,15 @@ class UserController
 
     public function doDeleteProfile(): void
     {
-        $this->userManager->delete($_SESSION["user"]->getId());
-        $this->doDisconnect();
+        $response = $this->userManager->delete($_SESSION["user"]->getId());
+        if (!$response) {
+            $page = "profile";
+        } else {
+            $this->doDisconnect();
+            $page = "login";
+            $info = "Utilisateur supprimé";
+        }
+        require "view/default.php";
     }
 
     public function updateProfile(): void
