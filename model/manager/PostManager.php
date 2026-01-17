@@ -59,4 +59,14 @@ class PostManager
         ]);
         return iterator_to_array($posts);
     }
+
+    public function gotReplied($id): bool
+    {
+        $post = $this->findById($id);
+        if (!$post) {
+            return false;
+        }
+        $post->setLastReplyAt(date("d/m/Y H:i:s"));
+        return $this->update($post);
+    }
 }

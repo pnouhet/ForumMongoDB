@@ -84,11 +84,6 @@ class UserController
         require "view/default.php";
     }
 
-    public function isConnected(): bool
-    {
-        return isset($_SESSION["user"]);
-    }
-
     public function doDisconnect(): void
     {
         unset($_SESSION["user"]);

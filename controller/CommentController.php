@@ -42,6 +42,7 @@ class CommentController
             $comment = new Comment($data);
             $response = $this->commentManager->create($comment);
 
+            $this->postManager->gotReplied($_POST["postId"]);
             header(
                 "Location: index.php?ctrl=post&action=findOne&id=" .
                     $_POST["postId"],
