@@ -20,7 +20,7 @@ $db = $connection->getDB();
 session_start();
 
 $ctrlParam = $_GET["ctrl"] ?? "post";
-$action = $_GET["action"] ?? "getPosts";
+$action = $_GET["action"] ?? "posts";
 
 $ctrlClass = ucfirst(strtolower($ctrlParam)) . "Controller";
 $controllerFile = "./controller/{$ctrlClass}.php";
