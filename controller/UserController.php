@@ -29,6 +29,8 @@ class UserController
         } else {
             $info = "Identifiants incorrects.";
             $page = "login";
+            require "./view/default.php";
+            return;
         }
         $posts = $this->postManager->findByUsername($user->getUsername());
         $page = "profile";
@@ -48,7 +50,10 @@ class UserController
                 $newUser = new User([
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
-                    "password" => password_hash($_POST["password"]),
+                    "password" => password_hash(
+                        $_POST["password"],
+                        PASSWORD_DEFAULT,
+                    ),
                     "createdAt" => date("d/m/Y H:i:s"),
                     "role" => "user",
                 ]);
