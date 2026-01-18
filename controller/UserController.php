@@ -21,17 +21,15 @@ class UserController
         $password = $_POST["password"] ?? null;
 
         $result = $this->userManager->findByEmail($email);
-        $passwdCorrect = sha1($password) == $result->getPassword();
-
-        if ($result && $passwdCorrect):
+        if ($result && password_verify($password, $result->getPassword())) {
             $info = "Connexion reussie";
             $_SESSION["user"] = $result;
             $user = $result;
             $page = "profile";
-        else:
+        } else {
             $info = "Identifiants incorrects.";
             $page = "login";
-        endif;
+        }
         $posts = $this->postManager->findByUsername($user->getUsername());
         $page = "profile";
         require "./view/default.php";
@@ -50,7 +48,7 @@ class UserController
                 $newUser = new User([
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
-                    "password" => sha1($_POST["password"]),
+                    "password" => password_hash($_POST["password"]),
                     "createdAt" => date("d/m/Y H:i:s"),
                     "role" => "user",
                 ]);
@@ -108,10 +106,14 @@ class UserController
 
     public function doDeleteProfile(): void
     {
-        $posts = $this->postManager->findByUsername($_SESSION["user"]->getUsername());
+        $posts = $this->postManager->findByUsername(
+            $_SESSION["user"]->getUsername(),
+        );
         foreach ($posts as $post) {
             $this->postManager->delete((string) $post["_id"]);
-            $comments = $this->commentManager->findByPostId((string) $post["_id"]);
+            $comments = $this->commentManager->findByPostId(
+                (string) $post["_id"],
+            );
             foreach ($comments as $comment) {
                 $this->commentManager->delete((string) $comment["_id"]);
             }
