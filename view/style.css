@@ -208,7 +208,8 @@ article p {
 }
 
 .post-title,
-.post-content .comment-content {
+.post-content,
+.comment-content {
     display: flex;
     flex-direction: column;
     gap: 10px;

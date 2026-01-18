@@ -3,10 +3,12 @@
 class PostManager
 {
     private $collection;
+    private $commentManager;
 
     public function __construct(MongoDB\Collection $collection)
     {
         $this->collection = $collection;
+        $this->commentManager = new CommentManager($collection);
     }
 
     public function create(Post $post): string
@@ -58,5 +60,15 @@ class PostManager
             "username" => $username,
         ]);
         return iterator_to_array($posts);
+    }
+
+    public function gotReplied($id): bool
+    {
+        $post = $this->findById($id);
+        if (!$post) {
+            return false;
+        }
+        $post->setLastReplyAt(date("d/m/Y H:i:s"));
+        return $this->update($post);
     }
 }

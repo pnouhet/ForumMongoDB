@@ -40,8 +40,9 @@ class UserManager
         if (!$data) {
             return null;
         }
-
+        $data = $data->getArrayCopy();
         $data["id"] = (string) $data["_id"];
+        unset($data["_id"]);
         return new User($data);
     }
 
@@ -70,16 +71,10 @@ class UserManager
 
     public function update(User $user): bool
     {
-        $id = $user->getId();
-        $username = $user->getUsername();
-        $password = $user->getPassword();
-        $updateData = ["username" => $username, "password" => $password];
-
         $result = $this->collection->updateOne(
             ["_id" => new MongoDB\BSON\ObjectId($user->getId())],
-            ['$set' => $updateData],
+            ['$set' => $user->toArray()],
         );
-
         return $result->getModifiedCount() > 0;
     }
 

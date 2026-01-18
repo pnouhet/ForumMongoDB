@@ -5,12 +5,14 @@ class UserController
     private $db;
     private $userManager;
     private $postManager;
+    private $commentManager;
 
     public function __construct(MongoDB\Database $db)
     {
         $this->db = $db;
-        $this->userManager = new UserManager($this->db->user);
-        $this->postManager = new PostManager($this->db->post);
+        $this->userManager = new UserManager($db->user);
+        $this->postManager = new PostManager($db->post);
+        $this->commentManager = new CommentManager($db->comment);
     }
 
     public function doLogin(): void
@@ -19,17 +21,17 @@ class UserController
         $password = $_POST["password"] ?? null;
 
         $result = $this->userManager->findByEmail($email);
-        $passwdCorrect = sha1($password) == $result->getPassword();
-
-        if ($result && $passwdCorrect):
+        if ($result && password_verify($password, $result->getPassword())) {
             $info = "Connexion reussie";
             $_SESSION["user"] = $result;
             $user = $result;
             $page = "profile";
-        else:
+        } else {
             $info = "Identifiants incorrects.";
             $page = "login";
-        endif;
+            require "./view/default.php";
+            return;
+        }
         $posts = $this->postManager->findByUsername($user->getUsername());
         $page = "profile";
         require "./view/default.php";
@@ -48,7 +50,10 @@ class UserController
                 $newUser = new User([
                     "email" => $_POST["email"],
                     "username" => $_POST["username"],
-                    "password" => sha1($_POST["password"]),
+                    "password" => password_hash(
+                        $_POST["password"],
+                        PASSWORD_DEFAULT,
+                    ),
                     "createdAt" => date("d/m/Y H:i:s"),
                     "role" => "user",
                 ]);
@@ -84,21 +89,11 @@ class UserController
         require "view/default.php";
     }
 
-    public function isConnected(): bool
-    {
-        return isset($_SESSION["user"]);
-    }
-
-    public function isAdmin(): bool
-    {
-        return isset($_SESSION["user"]) &&
-            $_SESSION["user"]->getRole() === "admin";
-    }
-
     public function doDisconnect(): void
     {
         unset($_SESSION["user"]);
         $page = "posts";
+        $posts = $this->postManager->findAll();
         require "view/default.php";
     }
 
@@ -116,13 +111,36 @@ class UserController
 
     public function doDeleteProfile(): void
     {
-        $this->userManager->delete($_SESSION["user"]->getId());
+        $posts = $this->postManager->findByUsername(
+            $_SESSION["user"]->getUsername(),
+        );
+        foreach ($posts as $post) {
+            $this->postManager->delete((string) $post["_id"]);
+            $comments = $this->commentManager->findByPostId(
+                (string) $post["_id"],
+            );
+            foreach ($comments as $comment) {
+                $this->commentManager->delete((string) $comment["_id"]);
+            }
+        }
+        $comments = $this->commentManager->findByUsername(
+            $_SESSION["user"]->getUsername(),
+        );
+        foreach ($comments as $comment) {
+            $this->commentManager->delete((string) $comment["_id"]);
+        }
+        $response = $this->userManager->delete($_SESSION["user"]->getId());
         $this->doDisconnect();
     }
 
     public function updateProfile(): void
     {
-        $page = "updateProfile";
+        if (!isset($_GET["id"])) {
+            $page = "profile";
+        } else {
+            $user = $this->userManager->findOne($_GET["id"]);
+            $page = "updateProfile";
+        }
         require "view/default.php";
     }
 
@@ -133,8 +151,11 @@ class UserController
             $this->doDisconnect();
         } else {
             $user->setUsername($_POST["username"]);
-            $user->setPassword(sha1($_POST["password"]));
-            $this->userManager->update($user);
+            $user->setEmail($_POST["email"]);
+            $response = $this->userManager->update($user);
+            if ($response) {
+                $_SESSION["user"] = $user;
+            }
             $page = "profile";
             require "view/default.php";
         }

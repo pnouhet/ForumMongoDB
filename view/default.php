@@ -12,14 +12,9 @@
     <?php include_once "header.php"; ?>
     <section class="container">
             <?php if (isset($page)) {
-                if ($page == "posts") {
-                    require "./view/posts.php";
-                } else {
-                    require "./view/" . $page . ".php";
-                }
+                require "./view/" . $page . ".php";
             } ?>
         </section>
-
 
     <?php include_once "footer.php"; ?>
 </body>

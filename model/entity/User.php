@@ -6,7 +6,6 @@ class User
     private string $email;
     private string $password;
     private string $username;
-    private string $role;
     private string $createdAt;
 
     public function __construct(array $data = null)
@@ -34,11 +33,6 @@ class User
     public function getUsername(): string
     {
         return $this->username;
-    }
-
-    public function getRole(): string
-    {
-        return $this->role;
     }
 
     public function getCreatedAt(): string
@@ -73,11 +67,6 @@ class User
         $this->createdAt = $date;
     }
 
-    public function setRole(string $role): void
-    {
-        $this->role = $role;
-    }
-
     public function hydrate(array $donnees)
     {
         foreach ($donnees as $key => $value) {
@@ -94,7 +83,6 @@ class User
             "username" => $this->username,
             "email" => $this->email,
             "password" => $this->password,
-            "role" => $this->role,
             "createdAt" => $this->createdAt,
         ];
     }

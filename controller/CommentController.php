@@ -40,8 +40,9 @@ class CommentController
                 "parentId" => $_POST["parentId"] ?? null,
             ];
             $comment = new Comment($data);
-            $this->commentManager->create($comment);
+            $response = $this->commentManager->create($comment);
 
+            $this->postManager->gotReplied($_POST["postId"]);
             header(
                 "Location: index.php?ctrl=post&action=findOne&id=" .
                     $_POST["postId"],
@@ -49,7 +50,9 @@ class CommentController
             exit();
         } else {
             $error = "Impossible de répondre.";
-            $page = "posts";
+            $page = "singlePost";
+            $post = $this->postManager->findById($_POST["postId"]);
+            $comments = $this->commentManager->findByPostId($_POST["postId"]);
             require "view/default.php";
         }
     }
@@ -88,8 +91,11 @@ class CommentController
                     );
                 } else {
                     $info = "Réponse modifié !";
-                    $page = "posts";
-                    $posts = $this->postManager->findAll();
+                    $page = "singlePost";
+                    $post = $this->postManager->findById($comment->getPostId());
+                    $comments = $this->commentManager->findByPostId(
+                        $comment->getPostId(),
+                    );
                 }
             }
         }
