@@ -3,10 +3,12 @@
 class PostManager
 {
     private $collection;
+    private $commentManager;
 
     public function __construct(MongoDB\Collection $collection)
     {
         $this->collection = $collection;
+        $this->commentManager = new CommentManager($collection);
     }
 
     public function create(Post $post): string

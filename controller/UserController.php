@@ -5,12 +5,14 @@ class UserController
     private $db;
     private $userManager;
     private $postManager;
+    private $commentManager;
 
     public function __construct(MongoDB\Database $db)
     {
         $this->db = $db;
-        $this->userManager = new UserManager($this->db->user);
-        $this->postManager = new PostManager($this->db->post);
+        $this->userManager = new UserManager($db->user);
+        $this->postManager = new PostManager($db->post);
+        $this->commentManager = new CommentManager($db->comment);
     }
 
     public function doLogin(): void
@@ -106,15 +108,22 @@ class UserController
 
     public function doDeleteProfile(): void
     {
-        $response = $this->userManager->delete($_SESSION["user"]->getId());
-        if (!$response) {
-            $page = "profile";
-        } else {
-            $this->doDisconnect();
-            $page = "login";
-            $info = "Utilisateur supprimé";
+        $posts = $this->postManager->findByUsername($_SESSION["user"]->getUsername());
+        foreach ($posts as $post) {
+            $this->postManager->delete((string) $post["_id"]);
+            $comments = $this->commentManager->findByPostId((string) $post["_id"]);
+            foreach ($comments as $comment) {
+                $this->commentManager->delete((string) $comment["_id"]);
+            }
         }
-        require "view/default.php";
+        $comments = $this->commentManager->findByUsername(
+            $_SESSION["user"]->getUsername(),
+        );
+        foreach ($comments as $comment) {
+            $this->commentManager->delete((string) $comment["_id"]);
+        }
+        $response = $this->userManager->delete($_SESSION["user"]->getId());
+        $this->doDisconnect();
     }
 
     public function updateProfile(): void

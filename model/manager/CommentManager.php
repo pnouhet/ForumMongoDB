@@ -23,6 +23,14 @@ class CommentManager
         return iterator_to_array($comments);
     }
 
+    public function findByUsername(string $username): array
+    {
+        $comments = $this->collection->find([
+            "username" => $username,
+        ]);
+        return iterator_to_array($comments);
+    }
+
     public function delete(string $id): bool
     {
         $result = $this->collection->deleteOne([
@@ -53,5 +61,4 @@ class CommentManager
         unset($data["_id"]);
         return new Comment($data);
     }
-
 }
